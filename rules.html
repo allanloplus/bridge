@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>橋牌規則說明・Allan 與阿拉蕾</title>
+<meta name="description" content="合約橋牌規則教學：叫牌、打牌、計分、局況與本遊戲 AI 使用的叫牌制度。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif:wght@600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rules.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <img src="assets/img/arale-cheer.jpg" alt="">
+    <span><b>Allan &amp; 阿拉蕾</b><small>橋牌規則說明</small></span>
+  </a>
+  <nav class="actions"><a class="btn accent" href="index.html">▶ 回到牌桌</a></nav>
+</header>
+
+<div class="rules">
+  <nav class="toc" aria-label="目錄">
+    <b>目錄</b>
+    <a href="#basics">橋牌是什麼</a>
+    <a href="#cards">牌的大小</a>
+    <a href="#flow">一副牌的流程</a>
+    <a href="#bidding">叫牌</a>
+    <a href="#play">打牌</a>
+    <a href="#points">牌力計算</a>
+    <a href="#scoring">計分</a>
+    <a href="#vul">局況（身價）</a>
+    <a href="#system">本遊戲叫牌制度</a>
+    <a href="#tips">打牌技巧</a>
+    <a href="#glossary">術語表</a>
+    <a href="#howto">操作說明</a>
+  </nav>
+
+  <article class="doc">
+    <section class="hero">
+      <div class="hero-text">
+        <h1>橋牌規則說明</h1>
+        <p>合約橋牌（Contract Bridge）是四個人、兩兩搭檔的鬥智遊戲。這頁從零開始說明規則，看完就能上桌和阿拉蕾搭檔。</p>
+      </div>
+      <img src="assets/img/allan-full.jpg" alt="Allan 顧問">
+    </section>
+
+    <div class="say arale"><img src="assets/img/arale-talk.jpg" alt=""><p><b>阿拉蕾</b>顧問，橋牌好像很難耶，我要從哪裡開始學？</p></div>
+    <div class="say allan"><img src="assets/img/allan-point.jpg" alt=""><p><b>Allan 顧問</b>別擔心，橋牌就像導入管理系統：先懂流程（叫牌、打牌、計分），再慢慢累積經驗。我們一步一步來！</p></div>
+
+    <section id="basics">
+      <h2>橋牌是什麼</h2>
+      <ul>
+        <li>四位玩家依方位稱為<b>北、東、南、西</b>。面對面的兩家是夥伴：<b>南北</b>一隊、<b>東西</b>一隊。</li>
+        <li>本遊戲中，你是<b>南家 Allan 顧問</b>，夥伴是<b>北家阿拉蕾</b>；對手是西家「駭客小黑」與東家「釣魚怪」。</li>
+        <li>每副牌的目標：用<b>叫牌</b>決定一個「合約」（要贏幾墩、哪一門當王牌），再用<b>打牌</b>完成或打宕這個合約。</li>
+        <li>一<b>墩</b>（trick）就是四家各出一張牌，最大的那張贏得這一墩。一副牌共 13 墩。</li>
+      </ul>
+    </section>
+
+    <section id="cards">
+      <h2>牌的大小</h2>
+      <p>使用一副 52 張的撲克牌（不含鬼牌），每人 13 張。</p>
+      <ul>
+        <li><b>點數大小</b>：A &gt; K &gt; Q &gt; J &gt; 10 &gt; 9 … &gt; 2。</li>
+        <li><b>打牌時</b>花色沒有大小之分，只有「王牌」會贏過其他花色。</li>
+        <li><b>叫牌時</b>花色有等級，由低到高：
+          <span class="suitline"><span class="blk">♣ 梅花</span> &lt; <span class="red">♦ 方塊</span> &lt; <span class="red">♥ 紅心</span> &lt; <span class="blk">♠ 黑桃</span> &lt; NT 無王</span></li>
+        <li>♠ 黑桃、♥ 紅心稱為<b>高花</b>；♦ 方塊、♣ 梅花稱為<b>低花</b>。</li>
+      </ul>
+    </section>
+
+    <section id="flow">
+      <h2>一副牌的流程</h2>
+      <ol class="steps">
+        <li><b>發牌</b>：發牌者輪流更換（第 1 副北家、第 2 副東家…依順時針）。</li>
+        <li><b>叫牌</b>：從發牌者開始，順時針輪流叫牌，決定最後合約。</li>
+        <li><b>打牌</b>：主打方要贏到合約所需墩數，防守方要阻止他們。</li>
+        <li><b>計分</b>：依合約是否完成、局況、是否賭倍來計分。</li>
+      </ol>
+    </section>
+
+    <section id="bidding">
+      <h2>叫牌</h2>
+      <p>叫品由「<b>線數</b>」（1～7）加上「<b>花色或無王</b>」組成，例如 <b>1♣</b>、<b>3NT</b>、<b>4<span class="blk">♠</span></b>。</p>
+      <div class="formula">需要贏的墩數 ＝ 線數 ＋ 6　　例：4♠ 需要 10 墩、3NT 需要 9 墩、7NT 需要全部 13 墩</div>
+      <ul>
+        <li>每個新叫品都必須<b>比前一個叫品高</b>：線數更高，或同線數但花色等級更高。例如 1♥ 之後可以叫 1♠、1NT、2♣…，但不能叫 1♦。</li>
+        <li><b>Pass（派司）</b>：這輪不叫。</li>
+        <li><b>X（賭倍 Double）</b>：對<b>對手</b>最後的叫品賭倍，表示認為他們做不成，計分加倍。</li>
+        <li><b>XX（再賭倍 Redouble）</b>：被對手賭倍後，認為一定做得成，計分再加倍。</li>
+        <li>有人叫牌後，<b>連續三家 Pass</b>，叫牌結束；最後的叫品就是<b>合約</b>。若四家一開始全部 Pass，這副重新發牌。</li>
+        <li><b>主打（Declarer）</b>：合約那一方中，<b>最先叫出該合約花色（或 NT）的人</b>。主打的夥伴稱為<b>夢家（Dummy）</b>。</li>
+      </ul>
+      <div class="tblwrap"><table class="grid">
+        <thead><tr><th>合約</th><th>需要墩數</th><th>是否成局</th></tr></thead>
+        <tbody>
+          <tr><td>1♣～2♠、1NT～2NT</td><td>7～8 墩</td><td>部分合約</td></tr>
+          <tr><td>3NT</td><td>9 墩</td><td>成局</td></tr>
+          <tr><td>4<span class="red">♥</span>、4♠</td><td>10 墩</td><td>成局</td></tr>
+          <tr><td>5♣、5<span class="red">♦</span></td><td>11 墩</td><td>成局</td></tr>
+          <tr><td>6 線（任何花色）</td><td>12 墩</td><td>小滿貫</td></tr>
+          <tr><td>7 線（任何花色）</td><td>13 墩</td><td>大滿貫</td></tr>
+        </tbody>
+      </table></div>
+      <div class="say arale"><img src="assets/img/arale-wink.jpg" alt=""><p><b>阿拉蕾</b>叫牌時只能用「叫品」跟夥伴溝通，不能偷偷說自己有什麼牌，這是資訊安全！</p></div>
+    </section>
+
+    <section id="play">
+      <h2>打牌</h2>
+      <ul>
+        <li><b>首引</b>：由主打的<b>左手邊</b>那家出第一張牌。</li>
+        <li>首引之後，<b>夢家把牌全部攤開</b>在桌上，由主打替夢家出牌；夢家本人不再參與決定。</li>
+        <li>依<b>順時針</b>每家出一張牌，組成一墩。</li>
+        <li><b>必須跟花色</b>：手上有首引那門花色，就一定要出那門花色。</li>
+        <li>沒有該花色時，可以出<b>王牌</b>（稱為<b>王吃</b>），或出任何其他牌（稱為<b>墊牌</b>）。</li>
+        <li><b>誰贏這墩</b>：有人出王牌時，最大的王牌贏；沒有王牌時，首引花色中最大的牌贏。無王合約沒有王牌。</li>
+        <li>贏得這墩的人，下一墩先出牌。</li>
+      </ul>
+      <p class="note">本遊戲中，若我方（南北）是主打，不論主打是 Allan 還是阿拉蕾，<b>兩手牌都由你操作</b>；可出的牌會浮起，不能出的牌會變暗。</p>
+    </section>
+
+    <section id="points">
+      <h2>牌力計算</h2>
+      <p>最常用的是<b>大牌點（HCP）</b>，全副牌共 40 點，平均每家 10 點。</p>
+      <div class="pts">
+        <div><span class="big">A</span>4 點</div><div><span class="big">K</span>3 點</div><div><span class="big">Q</span>2 點</div><div><span class="big">J</span>1 點</div>
+      </div>
+      <div class="tblwrap"><table class="grid">
+        <thead><tr><th>兩家合計點數</th><th>大約可以叫到</th></tr></thead>
+        <tbody>
+          <tr><td>20～24 點</td><td>部分合約</td></tr>
+          <tr><td>25～26 點</td><td>成局（3NT、4♥、4♠）</td></tr>
+          <tr><td>29 點左右</td><td>低花成局（5♣、5♦）</td></tr>
+          <tr><td>33 點左右</td><td>小滿貫</td></tr>
+          <tr><td>37 點左右</td><td>大滿貫</td></tr>
+        </tbody>
+      </table></div>
+      <p>有配合的王牌時，短門也有價值（<b>牌型點</b>）：缺門約 3～5 點、單張約 2～3 點、雙張約 1 點。兩家同一門合計 8 張以上，稱為<b>配合</b>，很適合當王牌。</p>
+    </section>
+
+    <section id="scoring">
+      <h2>計分（復式橋牌計分）</h2>
+      <h3>合約墩分（只計合約內的墩，第 7 墩起算）</h3>
+      <div class="tblwrap"><table class="grid">
+        <thead><tr><th>王牌</th><th>每墩</th><th>例子</th></tr></thead>
+        <tbody>
+          <tr><td>♣ 梅花、<span class="red">♦</span> 方塊</td><td>20 分</td><td>5♣ ＝ 100</td></tr>
+          <tr><td><span class="red">♥</span> 紅心、♠ 黑桃</td><td>30 分</td><td>4♠ ＝ 120</td></tr>
+          <tr><td>NT 無王</td><td>第 1 墩 40，之後每墩 30</td><td>3NT ＝ 100</td></tr>
+        </tbody>
+      </table></div>
+      <p>賭倍時墩分 ×2，再賭倍 ×4。合約墩分達 <b>100 分以上</b>就是<b>成局</b>。</p>
+      <h3>獎分</h3>
+      <div class="tblwrap"><table class="grid">
+        <thead><tr><th>項目</th><th>無身價</th><th>有身價</th></tr></thead>
+        <tbody>
+          <tr><td>部分合約</td><td>50</td><td>50</td></tr>
+          <tr><td>成局</td><td>300</td><td>500</td></tr>
+          <tr><td>小滿貫（6 線）</td><td>＋500</td><td>＋750</td></tr>
+          <tr><td>大滿貫（7 線）</td><td>＋1000</td><td>＋1500</td></tr>
+          <tr><td>賭倍 / 再賭倍完成</td><td>50 / 100</td><td>50 / 100</td></tr>
+          <tr><td>超額墩（未賭倍）</td><td colspan="2">每墩照該王牌墩分（低花 20、高花及無王 30）</td></tr>
+          <tr><td>超額墩（賭倍 / 再賭倍）</td><td>100 / 200</td><td>200 / 400</td></tr>
+        </tbody>
+      </table></div>
+      <h3>倒墩罰分（防守方得分）</h3>
+      <div class="tblwrap"><table class="grid">
+        <thead><tr><th>倒墩</th><th>未賭倍・無身價</th><th>未賭倍・有身價</th><th>賭倍・無身價</th><th>賭倍・有身價</th></tr></thead>
+        <tbody>
+          <tr><td>倒 1</td><td>50</td><td>100</td><td>100</td><td>200</td></tr>
+          <tr><td>倒 2</td><td>100</td><td>200</td><td>300</td><td>500</td></tr>
+          <tr><td>倒 3</td><td>150</td><td>300</td><td>500</td><td>800</td></tr>
+          <tr><td>之後每墩</td><td>＋50</td><td>＋100</td><td>＋300</td><td>＋300</td></tr>
+        </tbody>
+      </table></div>
+      <p>再賭倍的罰分是賭倍的兩倍。</p>
+      <div class="example">
+        <b>計分範例</b>
+        <ul>
+          <li>無身價 4♠ 剛好做成：120 ＋ 成局 300 ＝ <b>420</b></li>
+          <li>有身價 3NT 超 1 墩：100 ＋ 500 ＋ 30 ＝ <b>630</b></li>
+          <li>無身價 2♥ 做成：60 ＋ 50 ＝ <b>110</b></li>
+          <li>無身價 2♥ 被賭倍做成：120（成局！）＋ 300 ＋ 50 ＝ <b>470</b></li>
+          <li>有身價 4♥ 被賭倍倒 2 墩：防守方得 <b>500</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="vul">
+      <h2>局況（身價）</h2>
+      <p>每副牌會標示哪一方「<b>有身價</b>」。有身價時，成局獎分較高，但倒墩罰分也較重。本遊戲依標準 16 副循環：</p>
+      <div class="tblwrap"><table class="grid vul">
+        <thead><tr><th>副數</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead>
+        <tbody>
+          <tr><td>局況</td><td>雙無</td><td>南北</td><td>東西</td><td>雙有</td><td>南北</td><td>東西</td><td>雙有</td><td>雙無</td></tr>
+        </tbody>
+        <thead><tr><th>副數</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr></thead>
+        <tbody>
+          <tr><td>局況</td><td>東西</td><td>雙有</td><td>雙無</td><td>南北</td><td>雙有</td><td>雙無</td><td>南北</td><td>東西</td></tr>
+        </tbody>
+      </table></div>
+      <div class="say allan"><img src="assets/img/allan-think.jpg" alt=""><p><b>Allan 顧問</b>身價就像風險等級：有身價時衝刺的報酬高，失敗的衝擊也大，要評估後再決定風險胃納。</p></div>
+    </section>
+
+    <section id="system">
+      <h2>本遊戲叫牌制度</h2>
+      <p>阿拉蕾與對手 AI 使用簡化版的<b>標準美式（五張高花、強無王）</b>。你可以用任何叫法，但用同一套制度，阿拉蕾比較懂你的意思。叫牌紀錄中滑過（或點一下）任一叫品，就能看到它的意思。</p>
+      <h3>開叫</h3>
+      <div class="tblwrap"><table class="grid">
+        <thead><tr><th>開叫</th><th>意義</th></tr></thead>
+        <tbody>
+          <tr><td>1♥ / 1♠</td><td>12～21 點，該高花 5 張以上</td></tr>
+          <tr><td>1♣ / 1<span class="red">♦</span></td><td>12～21 點，沒有 5 張高花，低花 3 張以上（取較長的低花）</td></tr>
+          <tr><td>1NT</td><td>15～17 點，平均牌型（4333、4432、5332）</td></tr>
+          <tr><td>2♣</td><td>22 點以上強牌，逼叫</td></tr>
+          <tr><td>2<span class="red">♦</span> / 2<span class="red">♥</span> / 2♠</td><td>弱二：5～10 點，6 張好套</td></tr>
+          <tr><td>2NT</td><td>20～21 點，平均牌型</td></tr>
+          <tr><td>3 線花色</td><td>阻塞叫：牌力弱，7 張長套</td></tr>
+        </tbody>
+      </table></div>
+      <h3>回應夥伴開叫一線花色</h3>
+      <ul>
+        <li>0～5 點：Pass。</li>
+        <li>支持夥伴高花（3 張以上）：6～9 點單加（1♥–2♥），10～12 點跳加邀請（3♥），13 點以上直接成局（4♥）。</li>
+        <li>一線新花色：6 點以上、4 張以上，<b>逼叫一輪</b>。</li>
+        <li>二線新花色：10 點以上、4 張以上。</li>
+        <li>1NT：6～10 點、沒有合適花色；2NT：11～12 點平均；3NT：13～15 點平均。</li>
+      </ul>
+      <h3>回應 1NT</h3>
+      <ul>
+        <li><b>2♣ 史蒂曼（Stayman）</b>：8 點以上、有 4 張高花，詢問開叫者是否有 4 張高花（回答 2♦ 無、2♥、2♠）。</li>
+        <li>2♦ / 2♥ / 2♠：0～7 點、5 張以上，示弱停叫。</li>
+        <li>2NT：8～9 點邀請；3NT：10～15 點成局；3♥ / 3♠：10 點以上 5 張，請開叫者選 4 線或 3NT。</li>
+      </ul>
+      <h3>對手開叫後</h3>
+      <ul>
+        <li><b>爭叫</b>：一線 8～16 點、二線 11～16 點，5 張以上好套。</li>
+        <li><b>弱跳爭叫</b>：牌力弱、6 張套，跳一級叫。</li>
+        <li><b>1NT 爭叫</b>：15～18 點平均，有對方花色擋張。</li>
+        <li><b>技術性賭倍</b>：12 點以上，對方花色短、其他花色都有支持，請夥伴叫出最長的花色。</li>
+      </ul>
+      <p class="note">AI 是簡化版，不使用黑木問叫（Blackwood）等進階約定，偶爾會叫得太冒險或太保守，這也是練習判斷的好機會！</p>
+    </section>
+
+    <section id="tips">
+      <h2>打牌技巧</h2>
+      <ul>
+        <li><b>先計畫再出牌</b>：主打前數一數穩贏的墩，差幾墩、從哪裡來。</li>
+        <li><b>清王</b>：王牌合約通常先把對手的王牌清掉，免得自己的大牌被王吃。</li>
+        <li><b>樹立長門</b>：無王合約中，把雙手合計最長的花色打出來，小牌也能變成贏墩。</li>
+        <li><b>夢家王吃</b>：夢家某門缺門時，主打出那門讓夢家用王牌王吃，多賺墩數。</li>
+        <li><b>第二家出小、第三家出大</b>：防守的基本原則。</li>
+        <li><b>回攻夥伴的花色</b>：夥伴首引的花色，通常是他想樹立的長門。</li>
+        <li><b>首引</b>：有連續大牌（如 KQJ）出最大那張；對無王常從最長門出第四大的牌。</li>
+      </ul>
+      <div class="say arale"><img src="assets/img/arale-cheer.jpg" alt=""><p><b>阿拉蕾</b>卡關的時候按「💡 阿拉蕾提示」，我會告訴你我的建議和理由喔！</p></div>
+    </section>
+
+    <section id="glossary">
+      <h2>術語表</h2>
+      <dl class="glossary">
+        <div><dt>墩 Trick</dt><dd>四家各出一張牌為一墩。</dd></div>
+        <div><dt>合約 Contract</dt><dd>叫牌結束時最後的叫品。</dd></div>
+        <div><dt>王牌 Trump</dt><dd>合約指定的花色，可以贏過其他花色。</dd></div>
+        <div><dt>無王 NT</dt><dd>沒有王牌的合約。</dd></div>
+        <div><dt>主打 Declarer</dt><dd>負責打合約的人。</dd></div>
+        <div><dt>夢家 Dummy</dt><dd>主打的夥伴，牌攤在桌上由主打操作。</dd></div>
+        <div><dt>首引 Opening lead</dt><dd>第一墩的第一張牌，由主打左手邊出。</dd></div>
+        <div><dt>派司 Pass</dt><dd>這輪不叫牌。</dd></div>
+        <div><dt>賭倍 Double</dt><dd>對對手叫品加倍計分。</dd></div>
+        <div><dt>成局 Game</dt><dd>合約墩分達 100 分以上的合約。</dd></div>
+        <div><dt>滿貫 Slam</dt><dd>6 線（小滿貫）或 7 線（大滿貫）。</dd></div>
+        <div><dt>身價 Vulnerable</dt><dd>有身價時獎分與罰分都較高。</dd></div>
+        <div><dt>大牌點 HCP</dt><dd>A=4、K=3、Q=2、J=1。</dd></div>
+        <div><dt>爭叫 Overcall</dt><dd>對手開叫後，我方叫出花色。</dd></div>
+        <div><dt>逼叫 Forcing</dt><dd>夥伴不可以 Pass 的叫品。</dd></div>
+        <div><dt>停叫 Sign-off</dt><dd>希望夥伴 Pass 的叫品。</dd></div>
+        <div><dt>王吃 Ruff</dt><dd>缺門時出王牌贏墩。</dd></div>
+        <div><dt>墊牌 Discard</dt><dd>缺門時出其他花色的牌。</dd></div>
+        <div><dt>擋張 Stopper</dt><dd>能阻止對手連續拿某門贏墩的大牌，如 A、Kx、Qxx。</dd></div>
+        <div><dt>倒墩 Down</dt><dd>主打少拿的墩數，例如「倒 1」。</dd></div>
+      </dl>
+    </section>
+
+    <section id="howto">
+      <h2>操作說明</h2>
+      <ul>
+        <li>按「開始遊戲（開啟語音）」後，Allan 顧問與阿拉蕾會用台灣華語語音對話；也可以選靜音模式只看文字。</li>
+        <li><b>叫牌</b>：輪到你時會出現叫牌盒，點選叫品即可；不能叫的叫品會變淡。</li>
+        <li><b>出牌</b>：點選浮起的牌。我方主打時，夢家的牌也由你點選。</li>
+        <li><b>💡 阿拉蕾提示</b>：顯示建議的叫品或出牌，並說明理由。</li>
+        <li><b>⚙ 設定</b>：切換語音、選擇聲音、調整語速與出牌速度，或開啟「自動代打」看 AI 示範。</li>
+        <li>每副結束後可以「重打這副」用同一副牌再練一次，或查看四家原始牌型檢討。</li>
+        <li>語音品質取決於裝置：Windows / Edge 建議安裝「Microsoft Yunjhe」（男聲）與「Microsoft HsiaoChen」（女聲）台灣語音；沒有台灣男聲時，會以較低音調模擬 Allan 的聲音。</li>
+      </ul>
+      <p><a class="btn accent big" href="index.html">▶ 開始和阿拉蕾打牌</a></p>
+    </section>
+  </article>
+</div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Allan 與阿拉蕾的橋牌桌</title>
+<meta name="description" content="Allan 顧問與 AI 小助手阿拉蕾搭檔的四人橋牌互動遊戲，含繁體中文語音對話與規則教學。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif:wght@600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <img src="assets/img/arale-cheer.jpg" alt="">
+    <span><b>Allan &amp; 阿拉蕾</b><small>橋牌桌</small></span>
+  </a>
+  <nav class="actions">
+    <button id="btnHint" class="btn accent" type="button">💡 阿拉蕾提示</button>
+    <button id="btnNew" class="btn" type="button">新牌局</button>
+    <a class="btn" href="rules.html" target="_blank" rel="noopener">📖 規則說明</a>
+    <button id="btnSettings" class="btn ghost" type="button" aria-label="設定">⚙ 設定</button>
+  </nav>
+</header>
+
+<main class="layout">
+  <section class="table" id="table" aria-label="牌桌">
+    <div class="seat seat-n" id="seat0">
+      <div class="pinfo"><img class="pav" src="assets/img/arale-wink.jpg" alt=""><div><b>阿拉蕾</b><small>北・你的夥伴</small></div><span class="turn-dot"></span></div>
+      <div class="hand" id="hand0"></div>
+    </div>
+    <div class="seat seat-w" id="seat3">
+      <div class="pinfo"><span class="pav emoji">🕶️</span><div><b>駭客小黑</b><small>西・對手</small></div><span class="turn-dot"></span></div>
+      <div class="hand" id="hand3"></div>
+    </div>
+    <div class="center">
+      <div class="trick" id="trick">
+        <div class="slot s0"></div><div class="slot s1"></div><div class="slot s2"></div><div class="slot s3"></div>
+        <div class="compass"><span>北</span><span>東</span><span>南</span><span>西</span></div>
+      </div>
+      <div class="center-info" id="centerInfo"></div>
+    </div>
+    <div class="seat seat-e" id="seat1">
+      <div class="pinfo"><span class="pav emoji">🎣</span><div><b>釣魚怪</b><small>東・對手</small></div><span class="turn-dot"></span></div>
+      <div class="hand" id="hand1"></div>
+    </div>
+    <div class="seat seat-s" id="seat2">
+      <div class="pinfo"><img class="pav" src="assets/img/allan-smile.jpg" alt=""><div><b>Allan 顧問</b><small>南・你</small></div><span class="turn-dot"></span></div>
+      <div class="hand" id="hand2"></div>
+    </div>
+    <div class="toast" id="toast" aria-hidden="true"><img alt=""><span></span></div>
+    <div class="bidbox" id="bidbox" hidden>
+      <div class="bidbox-title">選擇你的叫品</div>
+      <div class="bidgrid" id="bidgrid"></div>
+      <div class="bidcalls">
+        <button type="button" class="call pass" data-call="pass">Pass 派司</button>
+        <button type="button" class="call dbl" data-call="X">X 賭倍</button>
+        <button type="button" class="call rdbl" data-call="XX">XX 再賭倍</button>
+      </div>
+    </div>
+  </section>
+
+  <aside class="side">
+    <section class="panel status" id="status" aria-label="牌局資訊"></section>
+    <section class="panel talk" aria-label="對話">
+      <div class="portraits">
+        <figure class="por allan"><img id="portAllan" src="assets/img/allan-smile.jpg" alt="Allan 顧問"><figcaption>Allan 顧問</figcaption></figure>
+        <figure class="por arale"><img id="portArale" src="assets/img/arale-wink.jpg" alt="阿拉蕾"><figcaption>阿拉蕾</figcaption></figure>
+      </div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+    </section>
+    <section class="panel auction" aria-label="叫牌紀錄">
+      <h2>叫牌紀錄 <small>（滑過叫品看說明）</small></h2>
+      <div class="tblwrap"><table id="auctionTbl"></table></div>
+      <p class="bidmeaning" id="bidMeaning"></p>
+    </section>
+  </aside>
+</main>
+
+<div class="overlay" id="splash">
+  <div class="splash-card">
+    <div class="splash-chars">
+      <img src="assets/img/allan-full.jpg" alt="Allan 顧問">
+      <img src="assets/img/arale-wave.jpg" alt="阿拉蕾">
+    </div>
+    <h1>Allan 與阿拉蕾的橋牌桌</h1>
+    <p>你是坐在南家的 <b>Allan 顧問</b>，北家的 AI 小助手 <b>阿拉蕾</b> 是你的夥伴。<br>一起對抗西家「駭客小黑」與東家「釣魚怪」！</p>
+    <div class="splash-btns">
+      <button id="btnStart" class="btn big accent" type="button">開始遊戲（開啟語音）</button>
+      <button id="btnStartMute" class="btn big" type="button">靜音開始</button>
+      <a class="btn big ghost" href="rules.html" target="_blank" rel="noopener">先看規則</a>
+    </div>
+    <p class="fine">語音使用瀏覽器內建的台灣華語語音；建議使用 Chrome、Edge 或 Safari。</p>
+  </div>
+</div>
+
+<dialog id="dlgResult" class="dlg">
+  <div class="dlg-body" id="resultBody"></div>
+  <div class="dlg-btns">
+    <button type="button" class="btn" id="btnReplay">重打這副</button>
+    <button type="button" class="btn accent" id="btnNext">下一副 ▶</button>
+  </div>
+</dialog>
+
+<dialog id="dlgSettings" class="dlg">
+  <h2>設定</h2>
+  <div class="form">
+    <label class="row"><input type="checkbox" id="optVoice"> 開啟角色語音</label>
+    <label class="row">語速 <input type="range" id="optRate" min="0.7" max="1.4" step="0.05"> <span id="optRateVal"></span></label>
+    <label class="row">Allan 顧問聲音 <select id="optVoiceAllan"></select> <button type="button" class="btn sm" id="testAllan">試聽</button></label>
+    <label class="row">阿拉蕾聲音 <select id="optVoiceArale"></select> <button type="button" class="btn sm" id="testArale">試聽</button></label>
+    <p class="fine" id="voiceNote"></p>
+    <label class="row"><input type="checkbox" id="optAuto"> 自動代打（看 AI 示範南家）</label>
+    <label class="row"><input type="checkbox" id="optTips"> 顯示 Allan 小教室提示</label>
+    <label class="row">出牌速度
+      <select id="optSpeed"><option value="1.6">慢</option><option value="1">一般</option><option value="0.5">快</option></select>
+    </label>
+  </div>
+  <div class="dlg-btns"><button type="button" class="btn accent" id="btnCloseSettings">完成</button></div>
+</dialog>
+
+<script src="js/engine.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
